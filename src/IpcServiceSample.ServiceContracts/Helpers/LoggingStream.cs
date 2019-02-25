@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Text;
 
 namespace IpcServiceSample.ServiceContracts.Helpers
@@ -27,7 +25,7 @@ namespace IpcServiceSample.ServiceContracts.Helpers
         public override long Position { get => _baseStream.Position; set => _baseStream.Position = value; }
 
         private enum StreamOperation { Read, Write };
-        
+
         private void Log(StreamOperation direction, byte[] buffer, int offset, int count)
         {
             _log.WriteLine($"[{direction.ToString().ToUpper()}: {count}]");
