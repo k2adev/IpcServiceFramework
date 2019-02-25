@@ -1,11 +1,9 @@
 ﻿using IpcServiceSample.ServiceContracts;
-using IpcServiceSample.ServiceContracts.Helpers;
-using JKang.IpcServiceFramework;
+using K2adev.IpcServiceFramework;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,8 +20,6 @@ namespace IpcServiceSample.ConsoleServer
             IIpcServiceHost host = new IpcServiceHostBuilder(services.BuildServiceProvider())
                 .AddNamedPipeEndpoint<IComputingService>("computingEndpoint", "pipeName")
                 .AddTcpEndpoint<ISystemService>("systemEndpoint", IPAddress.Loopback, 45684)
-                .AddTcpEndpoint<ITestService>("secureEndpoint", IPAddress.Loopback, 44384, new X509Certificate2(@"Certificates\server.pfx", "password"))
-                .AddTcpEndpoint<ITestService>("xorTranslatedEndpoint", IPAddress.Loopback, 45454, s => new XorStream(s))
                 .Build();
 
             var source = new CancellationTokenSource();
@@ -51,10 +47,16 @@ namespace IpcServiceSample.ConsoleServer
                         .AddNamedPipe(options =>
                         {
                             options.ThreadCount = 2;
+                            options.GZipCompressionEnabled = true;
+                            options.Aes256EncryptionEnabled = true;
+                        })
+                        .AddTcp(options => 
+                        {
+                            options.GZipCompressionEnabled = true;
+                            options.Aes256EncryptionEnabled = true;
                         })
                         .AddService<IComputingService, ComputingService>()
-                        .AddService<ISystemService, SystemService>()
-                        .AddService<ITestService, TestService>();
+                        .AddService<ISystemService, SystemService>();
                 });
         }
     }
