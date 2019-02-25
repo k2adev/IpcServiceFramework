@@ -14,6 +14,7 @@ namespace IpcServiceSample.ServiceContracts
         Task<int> SumAsync(int x, int y);
     }
 
+    [Serializable]
     public class ComplexNumber
     {
         public float A { get; set; }
