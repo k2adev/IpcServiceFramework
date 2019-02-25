@@ -4,6 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>K2adev.IpcServiceFramework</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>k2adev, jkang</Authors>
+    <Company>k2adev</Company>
+    <Description>A .NET Core lightweight inter-process communication framework</Description>
+    <Copyright>k2adev</Copyright>
+    <PackageIconUrl>http://github.com/contoso/UsefulStuff/nuget_icon.png</PackageIconUrl>
+    <PackageId>K2adev.IpcServiceFramework.Client</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
